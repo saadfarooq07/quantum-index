@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cortex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cortex
+  template:
+    metadata:
+      labels:
+        app: cortex
+    spec:
+      containers:
+      - name: cortex
+        image: ${ECR_REGISTRY}/quantum-index-cortex:latest
+        resources:
+          limits:
+            memory: "4Gi"
+            cpu: "2"
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+        env:
+        - name: PYTORCH_ENABLE_MPS_FALLBACK
+          value: "1"
+        - name: METAL_DEVICE_WRAPPER_TYPE
+          value: "1"
+        - name: CORTEX_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: cortex-secrets
+              key: api-key
+        - name: MILVUS_HOST
+          value: "vector-store"
+        - name: MILVUS_PORT
+          value: "19530"
+        - name: NODE_ENV
+          valueFrom:
+            configMapKeyRef:
+              name: cortex-config
+              key: NODE_ENV
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vector-store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vector-store
+  template:
+    metadata:
+      labels:
+        app: vector-store
+    spec:
+      containers:
+      - name: milvus
+        image: milvusdb/milvus:v2.3.3
+        resources:
+          limits:
+            memory: "4Gi"
+            cpu: "2"
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort: 19530
+        - containerPort: 9091
+        env:
+        - name: ETCD_CFG.auto-compaction-mode
+          value: "revision"
+        - name: ETCD_CFG.auto-compaction-retention
+          value: "1000"
+        - name: COMMON_CFG.retentionDuration
+          value: "0"
+        volumeMounts:
+        - name: milvus-data
+          mountPath: /var/lib/milvus
+      volumes:
+      - name: milvus-data
+        persistentVolumeClaim:
+          claimName: milvus-pvc

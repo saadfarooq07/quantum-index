@@ -1,0 +1,50 @@
+name: quantum-env
+channels:
+  - pytorch
+  - nvidia
+  - huggingface
+  - conda-forge
+  - defaults
+dependencies:
+  # Python and Core
+  - python=3.10
+  - pip=23.3
+  - conda-forge::fastapi=0.104.1
+  - conda-forge::uvicorn=0.24.0
+  - conda-forge::pydantic=2.4.2
+  
+  # PyTorch Stack
+  - pytorch::pytorch=2.1.1
+  - pytorch::torchvision=0.16.1
+  - pytorch::torchaudio=2.1.1
+  - pytorch::cpuonly
+  
+  # ML/AI
+  - conda-forge::transformers=4.35.2
+  - conda-forge::sentence-transformers=2.2.2
+  - conda-forge::huggingface-hub=0.19.4
+  
+  # Scientific Stack
+  - conda-forge::numpy=1.24.3
+  - conda-forge::scipy=1.11.3
+  - conda-forge::pandas=2.1.3
+  - conda-forge::networkx=3.2.1
+  
+  # Development Tools
+  - conda-forge::httpx=0.25.0
+  - conda-forge::python-multipart=0.0.6
+  - conda-forge::websockets=12.0
+  - conda-forge::rich=13.7.0
+  - conda-forge::ipython=8.20.0
+  - conda-forge::jupyter=1.0.0
+  
+  # Testing
+  - conda-forge::pytest=7.4.3
+  - conda-forge::pytest-asyncio=0.21.1
+  - conda-forge::pytest-cov=4.1.0
+  
+  # Additional dependencies via pip
+  - pip:
+    - docling==2.12.0
+    - langchain==0.0.344
+    - python-jose[cryptography]==3.3.0
