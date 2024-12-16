@@ -11,6 +11,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  security-events: write  # For security findings
 
 jobs:
   pixee:
@@ -25,5 +26,30 @@ jobs:
         with:
           auto-fix: true
           save-to-file: security-fixes.diff
+          fail-on-high: true  # Fail on high severity issues
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      # Additional security checks
+      - name: Run security scan
+        if: always()  # Run even if Pixee fails
+        run: |
+          # Check for sensitive files
+          ! find . -type f -exec grep -l "BEGIN.*PRIVATE KEY" {} \;
+          ! find . -type f -exec grep -l "api[_-]key" {} \;
+          
+          # Verify license headers
+          find . -name "*.py" -exec grep -l "Copyright" {} \;
+          
+          # Check for unsafe patterns
+          ! grep -r "eval(" .
+          ! grep -r "subprocess.call" .
+          
+      - name: Run dependency scan
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH'
