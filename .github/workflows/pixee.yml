@@ -1,0 +1,29 @@
+name: Pixee
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  pixee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      
+      - name: Pixee
+        uses: pixee/workflow-action@v1
+        with:
+          auto-fix: true
+          save-to-file: security-fixes.diff
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
