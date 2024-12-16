@@ -20,6 +20,23 @@ wheels/
 .installed.cfg
 *.egg
 
+# Large files and installers
+*.sh
+*.wal
+volumes/
+*.bin
+*.sst
+
+# Model files and caches
+*.pt
+*.pth
+*.onnx
+*.model
+.vector_cache/
+.torch/
+.cache/
+model_cache/
+
 # Virtual Environment
 venv/
 ENV/
@@ -31,20 +48,27 @@ env/
 *.swp
 *.swo
 
-# Docker
+# Docker and deployment
 .docker/
 
 # Logs
 *.log
 logs/
 
-# Cache
-.cache/
-.pytest_cache/
-.coverage
-htmlcov/
+# Runtime files
+*.pid
+*.socket
+process.lock
+.quantum_cache/
+.metal_cache/
 
-# OS
+# macOS specific
 .DS_Store
 .env
 .env.local
+
+# Miniforge and Conda
+miniforge*/
+miniconda*/
+conda-meta/
+*.conda

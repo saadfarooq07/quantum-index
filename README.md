@@ -22,49 +22,56 @@ A quantum-inspired development environment optimized for Apple Silicon M3, provi
 - **Cloud Offloading**: NIM backend for heavy computational tasks
 - **Parallel States**: Efficient handling of multiple process states
 
-## Architecture
+## System Requirements
 
-### Components
+### Hardware Requirements
+- Apple Silicon M3 Pro or newer
+- Minimum 16GB unified memory (36GB recommended)
+- 256GB storage (512GB recommended for model caches)
 
-1. **Cortex Service** (8-16GB Memory)
-   - Process monitoring and analysis
-   - Neural model inference
-   - Metal-accelerated computations
-   - Real-time process mapping
+### Software Requirements
+- macOS Sonoma 14.0 or newer
+- Xcode Command Line Tools
+- Docker Desktop for Apple Silicon
+- Python 3.11+
+- Metal Performance Shaders support
 
-2. **Vector Store** (4-8GB Memory)
-   - Process state embeddings
-   - Relationship graphs
-   - Historical analysis
+### GPU Requirements
+- M3 Pro with 14-core GPU or better
+- Neural Engine access
+- Metal 3 support
+- ProRes acceleration
 
-3. **Support Services**
-   - etcd (1-2GB): Configuration and service discovery
-   - MinIO (2-4GB): Object storage for model artifacts
-
-### Neural Models
-- Local M3-optimized models for real-time analysis
-- Hugging Face integration for advanced processing
-- GraphML models for process relationship mapping
+### Development Environment
+- VSCode with Metal debugging support
+- Xcode for Metal shader development
+- Docker Desktop with Rosetta 2 disabled
 
 ## Setup
 
-### Prerequisites
-- Apple Silicon M3 Pro (or newer)
-- macOS Sonoma or newer
-- Docker Desktop for Apple Silicon
-- 36GB+ unified memory recommended
-
 ### Quick Start
+
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/quantum-index.git
+# 1. Install Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 2. Install system dependencies
+brew install python@3.11 cmake ninja
+
+# 3. Clone the repository
+git clone https://github.com/saadfarooq07/quantum-index.git
 cd quantum-index
 
-# Start the services
+# 4. Create Python environment
+python3.11 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# 5. Start the services
 docker compose up -d
 
-# Run the quantum terminal
-docker attach quantum-index-cortex
+# 6. Run the quantum terminal
+./run_tui.sh
 ```
 
 ### Memory Optimization
@@ -107,6 +114,23 @@ MILVUS_PORT=19530
 - Efficient memory management
 - Dynamic batch processing
 - Neural Engine utilization
+
+## Performance Optimization
+
+### Memory Management
+- Unified memory: 36GB recommended for optimal performance
+- Memory pressure monitoring and dynamic allocation
+- Automatic model offloading when memory pressure is high
+
+### GPU Optimization
+- Metal Performance Shaders (MPS) for tensor operations
+- Neural Engine utilization for model inference
+- Dynamic batching for efficient GPU usage
+
+### Process Management
+- Quantum-inspired process scheduling
+- Neural-enhanced resource allocation
+- Real-time performance monitoring
 
 ## Development
 
