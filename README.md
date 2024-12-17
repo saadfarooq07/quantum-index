@@ -95,6 +95,50 @@ MILVUS_HOST=vector-store
 MILVUS_PORT=19530
 ```
 
+## Development Status (December 16, 2023)
+
+### Current State
+- Repository is on `main` branch (commit d1487d74: "Add security policy and enhance Pixee workflow with additional checks")
+- Clean state achieved after handling large file challenges
+- Enterprise features and Apple Silicon optimizations are ready in `clean-start` branch
+
+### Pending Actions
+1. Large File Handling
+   - Miniforge3-MacOSX-arm64.sh (59.27 MB)
+   - torch/lib/libtorch_cpu.dylib (169.32 MB)
+   - Various other build artifacts exceeding GitHub limits
+
+2. Integration Tasks
+   - Merge enterprise features from `clean-start` branch
+   - Implement transparent decision logging
+   - Set up continuous learning pipeline
+
+### Guidelines
+1. Transparency & Accountability
+   - All major decisions must be documented
+   - Regular reporting on system performance
+   - Audit trail for critical operations
+
+2. Human Oversight
+   - Review processes for critical changes
+   - Feedback mechanisms for stakeholders
+   - Override protocols for automated decisions
+
+3. Continuous Learning
+   - Regular performance reviews
+   - Data-driven improvements
+   - Adaptive decision making
+
+4. System Integration
+   - Workflow management integration
+   - Decision support system coupling
+   - Cross-system telemetry
+
+### Next Steps
+1. Implement Git LFS for large files
+2. Review and merge enterprise features
+3. Set up monitoring and logging infrastructure
+
 ## Features
 
 ### Process Management
