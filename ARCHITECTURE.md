@@ -70,6 +70,144 @@ kernel void neural_process(
 }
 ```
 
+### 4. Metal Acceleration Layer
+```mermaid
+graph TD
+    A[Metal Processor] --> B[Neural Engine]
+    A --> C[GPU]
+    B --> D[Quantum Pipeline]
+    C --> D
+    D --> E[Memory Pool]
+    E --> F[Output]
+```
+
+#### Key Features
+- Direct M3 Neural Engine integration
+- Metal Performance Shaders (MPS)
+- 8-bit quantization
+- Dynamic batch processing
+- Unified memory management
+
+### 5. Quantum-Inspired Processing
+
+#### State Management
+```python
+class QuantumState:
+    def __init__(self):
+        self.amplitude: float
+        self.phase: float
+        self.entangled_states: List[int]
+```
+
+#### Reality Metrics
+- Token coherence
+- Context stability
+- Hallucination detection
+- Pattern validation
+
+### 6. Model Architecture
+
+#### Core Models
+- **Code Understanding**: microsoft/codebert-base
+  - Priority: MEDIUM
+  - Use: Code analysis, documentation
+  
+- **State Tracking**: facebook/opt-350m
+  - Priority: LOW
+  - Use: Context maintenance
+  
+- **Decision Making**: google/flan-t5-small
+  - Priority: HIGH
+  - Use: Logic flows, architecture
+
+#### Integration Models
+- **LLMs**: 
+  - Claude 3 Series
+  - GPT-4 Series
+  - Mistral 7B
+- **Embeddings**: 
+  - BAAI/bge-small-en-v1.5
+  - OpenAI ada-002
+
+### 7. Memory Management
+
+#### Quantum Memory Pool
+```python
+class QuantumMemoryPool:
+    states: List[QuantumState]
+    gates: List[np.ndarray]
+    ref_count: int
+```
+
+#### Features
+- Dynamic allocation
+- State persistence
+- Garbage collection
+- Memory pressure monitoring
+
+### 8. Metal Optimization
+
+#### Shader Implementation
+```metal
+kernel void quantum_circuit(
+    device const Complex* input,
+    device Complex* output,
+    device const float4x4* gates,
+    uint index
+) {
+    // Quantum circuit simulation
+    Complex in = input[index];
+    float4x4 gate = gates[index/4];
+    float4 state = float4(in.real, in.imag, 0, 0);
+    state = gate * state;
+    output[index] = Complex(state.x, state.y);
+}
+```
+
+#### Optimization Features
+- Thread group optimization
+- Shared memory usage
+- Half-precision computation
+- Batch processing
+- Dynamic quantization
+
+### 9. Pipeline Integration
+
+#### Data Flow
+```mermaid
+graph LR
+    A[Input] --> B[Tokenization]
+    B --> C[Quantum States]
+    C --> D[Metal Processing]
+    D --> E[Reality Check]
+    E --> F[Output]
+```
+
+#### Processing Steps
+1. Input tokenization
+2. Quantum state creation
+3. Metal-accelerated processing
+4. Reality metric calculation
+5. Output generation
+
+### 10. Reality Anchoring
+
+#### Metrics System
+```python
+class RealityMetrics:
+    token_confidence: float
+    context_coherence: float
+    retrieval_relevance: float
+    human_trust: float
+    warning_flags: int
+```
+
+#### Validation Process
+1. Pattern matching
+2. Context verification
+3. Coherence checking
+4. Trust scoring
+
 ## Model Support
 
 ### 1. LLaMA 3.2 Integration
@@ -82,6 +220,101 @@ kernel void neural_process(
 - Claude 3
 - GPT-4 Turbo
 - Custom fine-tuned models
+
+## Model Architecture
+
+### Core Language Models
+
+#### 1. Large Language Models
+- **Anthropic Models**
+  - Claude 3 Opus (claude-3-opus-20240229)
+  - Claude 3 Sonnet (claude-3-sonnet-20240229)
+  - Claude 3.5 Sonnet (claude-3-5-sonnet-20240620)
+  - Claude 3 Haiku (claude-3-haiku-20240307)
+
+- **OpenAI Models**
+  - GPT-3.5 Series
+  - GPT-4 Series (including vision and turbo variants)
+  - Text Embedding Models (ada-002, v3-small, v3-large)
+
+- **Local Models**
+  - Mistral 7B Instruct (via Llamafile)
+
+#### 2. Specialized Models
+- **Code Understanding**: microsoft/codebert-base (Priority: MEDIUM)
+  - Purpose: Code analysis, documentation, refactoring
+  - Use Cases: Understanding code structure, suggesting improvements
+
+- **State Tracking**: facebook/opt-350m (Priority: LOW)
+  - Purpose: Context maintenance, variable tracking
+  - Use Cases: Program state monitoring, execution flow tracking
+
+- **Decision Making**: google/flan-t5-small (Priority: HIGH)
+  - Purpose: Logic flows, architectural decisions
+  - Use Cases: Solution optimization, complex problem solving
+
+### Metal Acceleration Integration
+
+```mermaid
+graph TB
+    subgraph "Metal Acceleration Layer"
+        MA[Metal Accelerator]
+        MPS[Metal Performance Shaders]
+        QZ[8-bit Quantization]
+    end
+    
+    subgraph "Memory Management"
+        UM[Unified Memory]
+        BP[Batch Processing]
+        RC[Resource Control]
+    end
+    
+    MA --> MPS
+    MA --> QZ
+    MPS --> UM
+    UM --> BP
+    BP --> RC
+```
+
+#### Metal Optimization Features
+1. **Hardware Acceleration**
+   - Direct M3 Neural Engine integration
+   - Metal Performance Shaders (MPS) for tensor operations
+   - Dynamic batch size adjustment
+
+2. **Memory Optimization**
+   - 8-bit quantization for efficiency
+   - Unified memory management
+   - Resource priority levels (LOW, MEDIUM, HIGH)
+
+3. **Performance Features**
+   - Batch size: 32
+   - Max sequence length: 2048
+   - Custom shader compilation
+   - Async processing support
+
+### RAG Integration
+
+The system uses BAAI/bge-small-en-v1.5 as the default embedding model, with the following features:
+- Metal-accelerated embedding generation
+- Milvus vector store integration
+- Reality metrics for result validation
+
+### Model Selection Logic
+
+```python
+model_configs = {
+    "code_understanding": ("microsoft/codebert-base", ResourcePriority.MEDIUM),
+    "state_tracking": ("facebook/opt-350m", ResourcePriority.LOW),
+    "decision_making": ("google/flan-t5-small", ResourcePriority.HIGH)
+}
+```
+
+The system automatically selects models based on:
+1. Task type and complexity
+2. Resource availability
+3. Performance requirements
+4. Metal optimization compatibility
 
 ## Performance Optimization
 
@@ -131,3 +364,19 @@ response = await client.generate(
     prompt="Implement a neural network",
     metal_optimize=True
 )
+
+```
+
+## Performance Characteristics
+
+### Hardware Utilization
+- M3 Neural Engine: 80-95%
+- Metal GPU: 60-75%
+- Memory Usage: Dynamic (8-16GB)
+- Batch Size: 32 (configurable)
+
+### Optimization Targets
+- Latency: <50ms per token
+- Throughput: >1000 tokens/sec
+- Memory Efficiency: 8-bit quantization
+- Reality Score: >0.95

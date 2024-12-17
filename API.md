@@ -102,6 +102,243 @@ Response:
 }
 ```
 
+## Quandex Neural Engine API
+
+## Overview
+
+The Quandex Neural Engine provides a quantum-inspired API for neural processing on Apple Silicon M3. This document outlines the core APIs and their usage.
+
+## Core APIs
+
+### 1. Metal Acceleration
+
+#### MetalAccelerator
+```python
+from quandex.metal import MetalAccelerator, MetalConfig
+
+# Initialize accelerator
+config = MetalConfig(
+    batch_size=32,
+    quantization_bits=8
+)
+accelerator = MetalAccelerator(config)
+
+# Prepare model for Metal execution
+model = accelerator.prepare_model(your_model)
+```
+
+#### Configuration Options
+```python
+class MetalConfig:
+    device: str = "mps"  # Metal Performance Shaders
+    batch_size: int = 32
+    max_sequence_length: int = 2048
+    quantization_bits: int = 8
+    attention_heads: int = 8
+```
+
+### 2. Quantum Processing
+
+#### QuantumRAG
+```python
+from quandex.quantum import QuantumRAG
+
+# Initialize quantum RAG
+rag = QuantumRAG(
+    embedding_model="BAAI/bge-small-en-v1.5",
+    metal_config=metal_config
+)
+
+# Process documents
+docs = rag.load_documents("path/to/docs")
+rag.index_documents(docs)
+
+# Query
+answer = rag.answer_question("What is quantum computing?")
+```
+
+#### State Management
+```python
+from quandex.quantum import QuantumState
+
+# Create quantum states
+state = QuantumState(
+    amplitude=0.707,
+    phase=0.0
+)
+
+# Apply transformations
+transformed = quantum_processor.apply_gate(state, "hadamard")
+```
+
+### 3. Reality Metrics
+
+#### RealityCheck
+```python
+from quandex.reality import RealityMetrics
+
+# Initialize metrics
+metrics = RealityMetrics()
+
+# Check token reality
+score = metrics.check_token(
+    token="example",
+    context="This is an example context"
+)
+
+# Get detailed metrics
+details = metrics.get_detailed_metrics()
+```
+
+### 4. Memory Management
+
+#### QuantumMemoryPool
+```python
+from quandex.memory import QuantumMemoryPool
+
+# Initialize memory pool
+pool = QuantumMemoryPool(
+    max_states=1000,
+    cleanup_threshold=0.75
+)
+
+# Allocate states
+state_id = pool.allocate_state(quantum_state)
+
+# Release states
+pool.release_state(state_id)
+```
+
+## Integration Examples
+
+### 1. Complete Pipeline
+```python
+from quandex import QuantumPipeline
+
+# Initialize pipeline
+pipeline = QuantumPipeline(
+    metal_config=metal_config,
+    model_config=model_config
+)
+
+# Process input
+result = pipeline.process(
+    input_text="Your input here",
+    reality_check=True
+)
+```
+
+### 2. Custom Model Integration
+```python
+from quandex import ModelAdapter
+
+# Create model adapter
+adapter = ModelAdapter(
+    model_path="path/to/model",
+    metal_optimize=True
+)
+
+# Use adapter
+output = adapter.generate(
+    prompt="Your prompt",
+    max_tokens=100
+)
+```
+
+## Best Practices
+
+### 1. Memory Optimization
+- Use appropriate batch sizes (32 recommended)
+- Enable 8-bit quantization when possible
+- Monitor memory pressure
+- Clean up unused states
+
+### 2. Performance Tuning
+- Use Metal acceleration
+- Enable dynamic batching
+- Optimize thread groups
+- Monitor reality metrics
+
+### 3. Reality Anchoring
+- Always validate outputs
+- Monitor coherence scores
+- Set appropriate thresholds
+- Handle edge cases
+
+## Error Handling
+
+### Common Errors
+```python
+from quandex.exceptions import (
+    MetalError,
+    QuantumStateError,
+    RealityCheckError
+)
+
+try:
+    result = pipeline.process(input_text)
+except MetalError as e:
+    print(f"Metal acceleration error: {e}")
+except QuantumStateError as e:
+    print(f"Quantum state error: {e}")
+except RealityCheckError as e:
+    print(f"Reality check failed: {e}")
+```
+
+## Advanced Features
+
+### 1. Custom Quantum Gates
+```python
+from quandex.quantum import QuantumGate
+
+# Define custom gate
+class CustomGate(QuantumGate):
+    def apply(self, state):
+        # Implementation
+        pass
+
+# Register gate
+quantum_processor.register_gate("custom", CustomGate())
+```
+
+### 2. Reality Metric Extensions
+```python
+from quandex.reality import BaseMetric
+
+# Define custom metric
+class CustomMetric(BaseMetric):
+    def calculate(self, token, context):
+        # Implementation
+        pass
+
+# Register metric
+metrics.register_metric("custom", CustomMetric())
+```
+
+## Performance Monitoring
+
+### 1. Metrics Collection
+```python
+from quandex.monitoring import MetricsCollector
+
+# Initialize collector
+collector = MetricsCollector()
+
+# Record metrics
+collector.record_latency(50)  # ms
+collector.record_memory_usage(1024)  # MB
+collector.record_reality_score(0.95)
+```
+
+### 2. Performance Analysis
+```python
+from quandex.monitoring import PerformanceAnalyzer
+
+# Analyze performance
+analyzer = PerformanceAnalyzer(collector)
+report = analyzer.generate_report()
+```
+
 ## Python SDK
 
 ### Installation
