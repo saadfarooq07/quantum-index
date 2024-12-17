@@ -1,26 +1,26 @@
 Copyright 2024 Saad Farooq (saad.farooq07@gmail.com)
 All rights reserved.
 
-# Quantum Index
+# Quandex Neural Engine
 
-A high-performance development environment optimized for Apple Silicon M3, providing intelligent process management and neural-enhanced development tools.
+A high-performance neural processing engine optimized for Apple Silicon M3, featuring the JAN API server for advanced model deployment and inference.
 
 ## Core Features
 
-### 1. M3 Metal Optimization
+### 1. Neural Engine Integration
 - **Metal Performance Shaders**: Direct integration with M3's Neural Engine
+- **Model Optimization**: GGUF format optimization for LLaMA 3.2
 - **Dynamic Memory Management**: Optimized for unified memory architecture
-- **Adaptive Resource Allocation**: Smart memory distribution based on system pressure
 
-### 2. Intelligent Processing
-- **Parallel Processing**: Efficient handling of concurrent operations
-- **Neural Analysis**: Real-time process behavior analysis using Metal-accelerated models
-- **Resource Optimization**: Dynamic resource allocation based on process priorities
+### 2. JAN API Server
+- **Model Deployment**: Efficient model serving through JSON Agentic Neural server
+- **Metal Acceleration**: M3-optimized inference pipeline
+- **Resource Management**: Dynamic resource allocation based on model requirements
 
 ### 3. Performance Features
-- **Metal Acceleration**: Optimized tensor operations using MPS
-- **Memory Pooling**: Efficient unified memory management
-- **Batch Processing**: Dynamic batch size adjustment based on memory pressure
+- **LLaMA 3.2 Support**: Metal-accelerated inference for latest models
+- **Memory Optimization**: Efficient unified memory management
+- **Batch Processing**: Dynamic batch size adjustment for optimal throughput
 
 ## System Requirements
 
@@ -29,30 +29,38 @@ A high-performance development environment optimized for Apple Silicon M3, provi
 - 36GB Unified Memory (recommended)
 - Xcode 15.0+ (for Metal development)
 
-## Memory Management
+## Model Integration
 
-The system implements careful memory management:
 ```python
-# Example memory allocation
-memory_manager = UnifiedMemoryManager(max_memory_gb=24)  # Safe allocation
-optimizer = MetalMemoryOptimizer()
+# Initialize Quandex Engine
+from quandex import QuandexEngine, ModelConfig
 
-# Dynamic batch processing
-batch_processor = M3Optimizer()
-result = batch_processor.optimize_batch(tokens)
+engine = QuandexEngine(
+    model="llama-3.2",
+    metal_optimize=True
+)
+
+# Process through JAN API
+result = await engine.process(
+    input_text,
+    temperature=0.7
+)
 ```
 
 ## Metal Performance
 
-Leverages Metal Performance Shaders for optimal processing:
+Leverages Metal Performance Shaders for neural processing:
 ```python
-# Metal tensor processing
-processor = MetalTensorProcessor()
-result = processor.process_tensors(input_tensors)
+# Metal-optimized inference
+processor = MetalModelProcessor()
+result = processor.run_inference(
+    model="llama-3.2",
+    input_tokens=tokens
+)
 
-# Monitor system resources
-config = get_metal_config()
-print(f"MPS Memory Usage: {config['mps_current_allocated']} bytes")
+# Monitor resource usage
+stats = engine.get_metal_stats()
+print(f"MPS Memory Usage: {stats['mps_allocated']} bytes")
 ```
 
 ## Development
@@ -63,17 +71,25 @@ git clone https://github.com/saadfarooq07/quantum-index.git
 cd quantum-index
 ```
 
-2. Create conda environment:
+2. Create environment:
 ```bash
 conda env create -f services/cortex/environment.yml
-conda activate quantum-env
+conda activate quandex-env
 ```
 
-3. Set Metal environment variables:
+3. Configure Metal:
 ```bash
 export METAL_DEVICE_WRAPPER_TYPE=1
 export PYTORCH_ENABLE_MPS_FALLBACK=1
 ```
+
+## Model Support
+
+Currently supported models:
+- LLaMA 3.2 (Metal-optimized)
+- Mistral AI (coming soon)
+- Claude 3 (planned)
+- Custom GGUF models
 
 ## License
 
