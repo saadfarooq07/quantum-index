@@ -22,6 +22,70 @@ A quantum-inspired development environment optimized for Apple Silicon M3, provi
 - **Cloud Offloading**: NIM backend for heavy computational tasks
 - **Parallel States**: Efficient handling of multiple process states
 
+## Core Architecture
+
+### 1. Quantum Orchestration Layer
+- **Multi-Agent System**: Specialized agents (Architect, Developer, Reviewer, Tester, Optimizer) operating in quantum superposition
+- **Parallel State Processing**: Multiple development paths processed simultaneously through quantum circuits
+- **Dynamic Entanglement**: Agents learn and collaborate through quantum entanglement matrices
+- **Metal-Accelerated Quantum Operations**: Optimized quantum circuits running on M3 Neural Engine
+
+### 2. Neural Processing Pipeline
+- **Quantum LLM Integration**: Metal-optimized language models (Mistral-7B, Llama3) for intelligent decision making
+- **Parallel State Management**: Multiple possible solutions maintained in quantum superposition
+- **Quantum Memory Structure**: Short-term, long-term, and working memory in quantum states
+- **Probabilistic Decision Making**: Quantum measurement for optimal path selection
+
+### 3. M3 Neural Engine Integration
+- **Metal Acceleration**: Direct integration with M3's Neural Engine via Metal Performance Shaders (MPS)
+- **Unified Memory Management**: Optimized for 36GB unified memory architecture
+- **Dynamic Resource Allocation**: Smart memory distribution across components
+
+### 4. Process Intelligence
+- **Quantum Context**: Process relationships and states mapped in a quantum-inspired graph
+- **Neural Analysis**: Real-time process behavior analysis using M3-optimized models
+- **Resource Optimization**: Dynamic resource allocation based on process priorities
+
+### 5. Distributed Computing
+- **Local Processing**: M3 Neural Engine for real-time analysis
+- **Cloud Offloading**: NIM backend for heavy computational tasks
+- **Parallel States**: Efficient handling of multiple process states
+
+## Quantum Development Ecosystem
+
+A quantum-inspired development environment leveraging Apple Silicon M3 for intelligent process management and neural-enhanced development tools.
+
+## Components
+
+### 1. Quandex Engine
+The core quantum development engine combining:
+- **Qortex**: Quantum-inspired neural processing core
+- **JAN API**: JSON Agentic Neural server
+- **Metal Acceleration**: M3-optimized quantum circuits
+
+### 2. qTerm
+Swift-based generative IDE/terminal:
+- **Metal Shaders**: Quantum state visualization
+- **Neural Processing**: M3-optimized computations
+- **Quantum UI**: State-aware development environment
+
+## Quantum Development Features
+
+### 1. Parallel Development Paths
+- **State Superposition**: Multiple code versions exist simultaneously
+- **Quantum Measurement**: Optimal path selection through probability collapse
+- **Entangled States**: Related code changes maintain quantum correlation
+
+### 2. Intelligent Agent Collaboration
+- **Role-Based Agents**: Specialized quantum agents for different development tasks
+- **Entanglement Learning**: Agents improve collaboration through quantum correlation
+- **Metal-Accelerated Processing**: Quantum circuits optimized for M3 hardware
+
+### 3. Neural-Enhanced Decision Making
+- **Quantum LLM Pipeline**: Language models operating on quantum states
+- **Probabilistic Analysis**: Quantum-inspired algorithms for code analysis
+- **Dynamic Optimization**: Real-time adjustment of quantum circuits
+
 ## System Requirements
 
 ### Hardware Requirements

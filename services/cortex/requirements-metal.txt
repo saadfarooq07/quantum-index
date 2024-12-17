@@ -1,0 +1,5 @@
+metal-cpp>=1.0.0
+pyobjc-framework-Metal>=9.2
+pyobjc-framework-MetalKit>=9.2
+pyobjc-framework-MetalPerformanceShaders>=9.2
+pyobjc-framework-Cocoa>=9.2
