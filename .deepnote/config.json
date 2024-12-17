@@ -1,0 +1,19 @@
+{
+    "project": {
+        "name": "Quantum Nexus Development",
+        "description": "Quantum-inspired development environment with Metal optimization"
+    },
+    "environment": {
+        "init": {
+            "type": "jupyter",
+            "path": "deepnote_init.ipynb"
+        }
+    },
+    "hardware": {
+        "instance_type": "gpu-small"
+    },
+    "dependencies": {
+        "python": "3.10",
+        "cuda": "11.8"
+    }
+}
