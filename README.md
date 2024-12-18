@@ -84,6 +84,117 @@ print(f"Processing Speed: {stats['processing_time']}ms")
 
 A quantum-inspired neural processor leveraging M3 architecture for token-level state management and reality-anchored inference.
 
+## Overview
+
+Quandex is a quantum-inspired neural processing engine optimized for Apple Silicon M3, featuring Metal acceleration and quantum state management.
+
+```mermaid
+graph TB
+    User[User] --> QTerm[qTerm]
+    QTerm --> Q0rtex[Q0rtex Engine]
+    Q0rtex --> JAN[JAN API]
+    Q0rtex --> Metal[Metal Layer]
+    Metal --> M3[M3 Pro]
+```
+
+## Features
+
+### Quantum Processing
+- Quantum state management with Metal acceleration
+- Entanglement-based attention mechanisms
+- Error correction and recovery
+- Real-time state monitoring
+
+### Metal Acceleration
+- M3 Pro optimization
+- SIMD operations
+- Hardware-accelerated quantum gates
+- Dynamic memory management
+
+### AI Integration
+- OpenAI-compatible API endpoints
+- Quantum-enhanced embeddings
+- Metal-accelerated inference
+- Parallel state processing
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/quantum-index.git
+cd quantum-index
+
+# Build the project
+swift build -c release
+
+# Start qTerm
+.build/release/qterm
+```
+
+## Architecture
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed system design.
+
+## Components
+
+### qTerm
+Quantum-enhanced terminal interface:
+- State visualization
+- Command processing
+- Error handling
+- Metal optimization
+
+### Q0rtex
+Quantum processing engine:
+- State management
+- Entanglement operations
+- Error correction
+- Metal acceleration
+
+### JAN API
+JSON Agentic Neural server:
+- OpenAI compatibility
+- Quantum embeddings
+- State serialization
+- Error recovery
+
+## Performance
+
+### M3 Pro Metrics
+- Gate operations: <0.1ms
+- State preparation: <1ms
+- Measurement: <0.5ms
+- Memory usage: <100MB
+
+## Development
+
+### Prerequisites
+- macOS Sonoma or later
+- Xcode 15.0+
+- Swift 5.9+
+- Metal-capable device
+
+### Building
+```bash
+# Install dependencies
+swift package resolve
+
+# Build project
+swift build -c release
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create feature branch
+3. Commit changes
+4. Push to branch
+5. Create Pull Request
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details
+
 ## Features
 
 ### 🚀 Metal Acceleration
