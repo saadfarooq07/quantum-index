@@ -39,7 +39,7 @@ public class QWriterPalette {
         }
         
         superposition.insert(name)
-        return "Entered \(name) state with coherence \(state.coherence)"
+        return "Entered \(name) state with coherence \(String(format: "%.2f", state.coherence))"
     }
     
     /// Collapse writing states into final form
@@ -48,7 +48,7 @@ public class QWriterPalette {
         for state in superposition {
             if let quantum = contextStates[state] {
                 try metalCompute?.processQuantumState(quantum, gate: .hadamard)
-                result += "\n- Collapsed \(state) with probability \(quantum.measure())"
+                result += "\n- Collapsed \(state) with probability \(String(format: "%.2f", quantum.measure()))"
             }
         }
         superposition.removeAll()
@@ -90,7 +90,7 @@ public class QWriterPalette {
         📚 Quantum Document Review:
         - Path: \(path)
         - State: \(state)
-        - Neural coherence: \(reviewState.coherence)
+        - Neural coherence: \(String(format: "%.2f", reviewState.coherence))
         - Analysis complete
         """
     }
@@ -105,13 +105,17 @@ public class QWriterPalette {
 
 // MARK: - QuantumVector Extensions
 extension QuantumVector {
+    /// Get the current coherence value
     var coherence: Double {
         let components = self.components
-        return sqrt(components[0] * components[0] + components[1] * components[1])
+        if components.isEmpty {
+            return 0.0
+        }
+        return Double(components[0].real * components[0].real + components[1].real * components[1].real)
     }
     
-    func measure() -> String {
+    func measure() -> Double {
         let probability = coherence
-        return String(format: "%.2f", probability)
+        return probability
     }
 }
