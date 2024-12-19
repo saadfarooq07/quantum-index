@@ -1,0 +1,58 @@
+%%{init: {'theme': 'dark', 'themeVariables': { 'fontFamily': 'monospace', 'primaryColor': '#4C75A0', 'primaryTextColor': '#fff', 'primaryBorderColor': '#7C0000', 'lineColor': '#F8B229', 'secondaryColor': '#006100', 'tertiaryColor': '#204060'}}}%%
+
+flowchart TB
+    subgraph InputLayer["Input Processing Layer"]
+        direction LR
+        Input[("Input Stream")] --> TokenProcessor["Token Processor"]
+        TokenProcessor --> StatePrep["Quantum State Preparation"]
+    end
+
+    subgraph QuantumCore["Quantum Core Processing"]
+        direction TB
+        subgraph MetalAccel["Metal Acceleration Layer"]
+            direction LR
+            MA["Metal API"] --> ANE["Neural Engine"]
+            MA --> GPU["M3 Pro GPU"]
+            MA --> MPS["Metal Performance Shaders"]
+        end
+
+        subgraph MemoryMgmt["Memory Management"]
+            direction LR
+            QMP["Quantum Memory Pool"] --> |"Allocation"| ResAlloc["Resource Allocator"]
+            ResAlloc --> |"Optimization"| MemOpt["Memory Optimizer"]
+        end
+
+        subgraph RealityMetrics["Reality Metrics System"]
+            direction LR
+            StateVal["State Validator"] --> MetricCol["Metrics Collector"]
+            MetricCol --> RealityCheck["Reality Check Engine"]
+        end
+    end
+
+    subgraph DocumentAnalysis["Document Analysis Pipeline"]
+        direction TB
+        DocProc["Document Processor"] --> |"Extract"| Features["Feature Extraction"]
+        Features --> |"Analyze"| QState["Quantum State Analysis"]
+        QState --> |"Validate"| Quality["Quality Control"]
+    end
+
+    subgraph ResourceMgmt["Resource Management"]
+        direction LR
+        Scheduler["Quantum Scheduler"] --> |"Allocate"| Resources["Resource Pool"]
+        Resources --> |"Monitor"| Metrics["Resource Metrics"]
+        Metrics --> |"Optimize"| Scheduler
+    end
+
+    InputLayer --> QuantumCore
+    QuantumCore --> DocumentAnalysis
+    DocumentAnalysis --> |"Results"| Output[("Output Stream")]
+    ResourceMgmt -.-> |"Manage"| QuantumCore
+    RealityMetrics -.-> |"Validate"| DocumentAnalysis
+
+    style InputLayer fill:#1a1a1a,stroke:#4C75A0
+    style QuantumCore fill:#1a1a1a,stroke:#7C0000
+    style DocumentAnalysis fill:#1a1a1a,stroke:#006100
+    style ResourceMgmt fill:#1a1a1a,stroke:#204060
+    style Input fill:#4C75A0,stroke:#fff
+    style Output fill:#4C75A0,stroke:#fff
+

@@ -5,6 +5,20 @@ All rights reserved.
 
 Hi there! Let me tell you about something really cool that makes your fancy M3 Mac even more amazing. You know how your computer has this special brain called the Neural Engine? Well, we made something that helps it think faster and smarter!
 
+## System Architecture 🔍
+
+Our modern architecture leverages the power of quantum-inspired processing and Apple's M3 Neural Engine:
+
+![Quandex Architecture](diagrams/architecture.png)
+
+This architecture diagram shows how Quandex:
+- Integrates directly with the M3 Neural Engine through Metal
+- Manages quantum states for optimal processing
+- Implements reality-anchored validation
+- Orchestrates memory and resource allocation
+
+[View detailed architecture diagram](diagrams/architecture.png)
+
 ## What Makes It Special? ✨
 
 ### Speed Like Never Before 🏃‍♂️
