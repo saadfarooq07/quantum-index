@@ -1,30 +1,58 @@
-[project]
-name = "quantum-neural-engine"
-version = "0.1.0"
-description = "Quantum Neural Engine with Metal Acceleration"
-requires-python = ">=3.13.1"
-license = "MIT"
-authors = [
-    {name = "Your Name", email = "your.email@example.com"}
-]
-
-[project.dependencies]
-python = "^3.13.1"
-torch = "^2.1.0"
-transformers = "^4.35.0"
-accelerate = "^0.24.0"
-sympy = "^1.12"
-numpy = "^1.24.0"
-
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[project]
+name = "q0rtex"
+version = "0.1.0"
+description = "Quantum-inspired terminal with Metal acceleration for M3 Pro"
+requires-python = ">=3.13"
+authors = [
+    { name = "Q0rtex Team" }
+]
+dependencies = [
+    "fastapi>=0.115.0",
+    "hnswlib>=0.8.0",
+    "httpx>=0.28.0",
+    "ipython>=8.22.0",
+    "langchain>=0.3.0",
+    "langchain-core>=0.3.26",
+    "langchain-text-splitters>=0.3.3",
+    "numpy>=1.26.0",
+    "pydantic>=2.10.0",
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.25.0",
+    "pytest-mock>=3.14.0",
+    "scipy>=1.12.0",
+    "textual>=1.0.0",
+    "torch>=2.1.0",
+    "torchaudio",
+    "torchvision",
+    "transformers>=4.35.0",
+    "uvicorn>=0.34.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "mypy",
+    "pylint"
+]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["src/q0rtex"]
+sources = ["src"]
+
 [tool.pytest.ini_options]
-addopts = "-ra -q"
-testpaths = ["tests"]
+addopts = "-ra -q --asyncio-mode=strict"
+testpaths = ["tests", "src/q0rtex/tests"]
+python_files = "test_*.py"
 
-[tool.ruff]
-line-length = 88
-target-version = "py313"
+[tool.black]
+line-length = 100
+target-version = ["py313"]
 
+[tool.isort]
+profile = "black"
+line_length = 100

@@ -1,0 +1,27 @@
+name: Metal Compatibility
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  metal-check:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --extra-index-url https://download.pytorch.org/whl/nightly/cpu
+          pip install -e .
+      - name: Verify Metal Support
+        run: |
+          python3 -c "import torch; print('MPS available:', torch.backends.mps.is_available())"
+          python3 -c "from q0rtex.metal import accelerator; accelerator.verify_metal_support()"
+      - name: Run Metal Tests
+        run: pytest tests/metal/ -v
+
