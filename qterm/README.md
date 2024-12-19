@@ -40,19 +40,27 @@ swift build -c release
 ## Architecture
 
 ```
-qTerm
+qTerm Architecture
 ├── Core
 │   ├── Command Processing
 │   ├── State Management
 │   └── Error Handling
-├── Quantum
-│   ├── State Visualization
-│   ├── Entanglement
-│   └── Measurement
-└── Metal
-    ├── Acceleration
-    ├── Memory Management
-    └── Performance
+├── Quantum (Q0rtex)
+│   ├── Qubit Management
+│   ├── Quantum Gates
+│   │   ├── Single-Qubit Gates
+│   │   └── Multi-Qubit Gates
+│   ├── Measurement
+│   ├── Error Correction
+│   └── Entanglement Operations
+├── Metal Acceleration
+│   ├── Quantum Circuit Simulation
+│   ├── State Vector Manipulation
+│   └── Parallel Gate Application
+└── Integration Layer
+    ├── Q0rtex-Metal Interface
+    ├── State Synchronization
+    └── Performance Optimization
 ```
 
 ## Integration
@@ -63,11 +71,18 @@ qTerm
 let processor = Q0rtexProcessor()
 
 // Process quantum command
-let result = try await processor.process(
-    command: "quantum-op",
-    state: currentState
+let analysis = try await qAnalyze.perform(
+    input: nlpLayer.processInput("quantum-op"),
+    context: quantumContext.current,
+    options: [
+        .useMetalAcceleration,
+        .applyErrorCorrection,
+        .enableStateVisualization
+    ],
+    progressHandler: { stage, progress in
+        await uiController.updateAnalysisProgress(stage: stage, progress: progress)
+    }
 )
-```
 
 ### Metal Acceleration
 ```swift
