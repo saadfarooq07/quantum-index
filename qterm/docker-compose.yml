@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  qterm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    platform: linux/arm64  # For M3
+    devices:
+      - /dev/dri:/dev/dri  # GPU passthrough
+    volumes:
+      - .:/app
+      - metal-cache:/var/metal/cache
+    environment:
+      - METAL_DEVICE_WRAPPER_TYPE=1
+      - METAL_DEBUG_ERROR_MODE=1
+      - SWIFT_DETERMINISTIC_HASHING=1
+      - OLLAMA_HOST=http://ollama:11434
+      - JAN_API_HOST=http://jan:8000
+    depends_on:
+      - ollama
+      - jan
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: gpu
+              count: 1
+              capabilities: [gpu, metal]
+    healthcheck:
+      test: ["CMD", "swift", "test"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  ollama:
+    image: ollama/ollama:latest
+    platform: linux/arm64
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: gpu
+              count: 1
+              capabilities: [gpu, metal]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  jan:
+    build:
+      context: ./jan
+      dockerfile: Dockerfile.jan
+    platform: linux/arm64
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./jan:/app
+      - jan-models:/app/models
+    environment:
+      - METAL_ENABLED=1
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - MODEL_CACHE_DIR=/app/models
+    depends_on:
+      - ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: gpu
+              count: 1
+              capabilities: [gpu, metal]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  quantum-memory:
+    image: redis:alpine
+    platform: linux/arm64
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - quantum-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  neural-cache:
+    image: memcached:alpine
+    platform: linux/arm64
+    command: memcached -m 1024
+    healthcheck:
+      test: ["CMD", "memcached-tool", "localhost:11211", "stats"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  metal-cache:
+  quantum-data:
+  ollama-models:
+  jan-models:

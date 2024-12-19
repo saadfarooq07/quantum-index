@@ -1,0 +1,101 @@
+{
+  "roles": {
+    "Alice": {
+      "type": "product_manager",
+      "goal": "Create successful products meeting market demands",
+      "constraints": "Use same language as requirements",
+      "actions": [
+        "WritePRD",
+        "PrepareDocuments"
+      ]
+    },
+    "Bob": {
+      "type": "architect",
+      "goal": "Design concise, usable, complete systems",
+      "constraints": "Keep architecture simple, use appropriate open source",
+      "actions": [
+        "WriteDesign"
+      ]
+    },
+    "Alex": {
+      "type": "engineer",
+      "goal": "Write elegant, readable, extensible code",
+      "constraints": "Follow standards, be modular and maintainable",
+      "actions": [
+        "WriteCode",
+        "WriteCodeReview",
+        "FixBug"
+      ]
+    },
+    "Charlie": {
+      "type": "qa_engineer",
+      "goal": "Ensure high quality and reliability",
+      "constraints": "Comprehensive test coverage",
+      "actions": [
+        "WriteTest",
+        "RunTest"
+      ]
+    }
+  },
+  "actions": {
+    "WritePRD": {
+      "description": "Create product requirements document",
+      "input_schema": {
+        "requirements": "str"
+      },
+      "output_schema": {
+        "prd": "str"
+      },
+      "role": "product_manager",
+      "phase": "requirements"
+    },
+    "WriteDesign": {
+      "description": "Create system design document",
+      "input_schema": {
+        "prd": "str"
+      },
+      "output_schema": {
+        "design": "str"
+      },
+      "role": "architect",
+      "phase": "design"
+    },
+    "WriteCode": {
+      "description": "Implement features",
+      "input_schema": {
+        "design": "str"
+      },
+      "output_schema": {
+        "code": "str"
+      },
+      "role": "engineer",
+      "phase": "implementation"
+    },
+    "WriteTest": {
+      "description": "Create test cases",
+      "input_schema": {
+        "code": "str"
+      },
+      "output_schema": {
+        "tests": "str"
+      },
+      "role": "qa_engineer",
+      "phase": "testing"
+    }
+  },
+  "workflow": {
+    "phases": [
+      "requirements",
+      "design",
+      "implementation",
+      "testing",
+      "deployment"
+    ],
+    "transitions": {
+      "requirements": "design",
+      "design": "implementation",
+      "implementation": "testing",
+      "testing": "deployment"
+    }
+  }
+}

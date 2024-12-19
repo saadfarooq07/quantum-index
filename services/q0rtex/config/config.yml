@@ -1,0 +1,34 @@
+server:
+  http_listen_port: 8000
+
+distributor:
+  shard_by_all_labels: true
+  pool:
+    health_check_ingesters: true
+
+ingester:
+  lifecycler:
+    ring:
+      kvstore:
+        store: inmemory
+      replication_factor: 1
+
+storage:
+  engine: blocks
+
+blocks_storage:
+  backend: filesystem
+  filesystem:
+    dir: /tmp/cortex/blocks
+  bucket_store:
+    sync_dir: /tmp/cortex/sync
+
+compactor:
+  data_dir: /tmp/cortex/compactor
+  sharding_ring:
+    kvstore:
+      store: inmemory
+
+frontend:
+  log_queries_longer_than: 10s
+  compress_responses: true

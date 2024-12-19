@@ -1,121 +1,175 @@
 import Foundation
 import Metal
 
-/// QWriterPalette - Quantum-aware writing context manager
-public class QWriterPalette {
-    // MARK: - Quantum State Management
-    private var contextStates: [String: QuantumVector] = [:]
-    private var superposition: Set<String> = []
+/// Quantum-aware writing interface with state coherence
+public class QWriterInterface {
+    // MARK: - State Management
+    private var fileStates: [String: FileStateVector] = [:]
+    private var coherenceGraph: StateCoherenceGraph
+    private let stateManager: QuantumStateManager
     private let metalCompute: MetalCompute?
     
-    // MARK: - Neural Bridge
-    private let neuralEngine: QDeviceManager.NeuralEngine
+    // MARK: - Neural Components
+    private var completionContext: CompletionContext
+    private var environmentModel: EnvironmentVector
     
-    // MARK: - Initialization
     public init() throws {
-        let deviceManager = try QDeviceManager()
-        self.neuralEngine = deviceManager.neuralEngine
+        self.stateManager = try QuantumStateManager(enableMetal: true)
         self.metalCompute = try? MetalCompute()
-        
-        // Initialize quantum writing states
-        try initializeWritingStates()
+        self.coherenceGraph = StateCoherenceGraph()
+        self.completionContext = CompletionContext()
+        self.environmentModel = EnvironmentVector()
     }
     
-    // MARK: - Writing State Management
-    private func initializeWritingStates() throws {
-        // Core writing states
-        contextStates["focus"] = QuantumVector.standardBasis(.zero)
-        contextStates["explore"] = QuantumVector.standardBasis(.plus)
-        contextStates["review"] = QuantumVector.standardBasis(.minus)
-        
-        // Initialize superposition for parallel writing
-        superposition.insert("focus")
+    // MARK: - File State Management
+    
+    /// Track file state with quantum coherence
+    public func trackFile(_ path: String, content: String) throws -> FileStateVector {
+        let stateVector = try FileStateVector(path: path, content: content)
+        fileStates[path] = stateVector
+        coherenceGraph.addNode(stateVector)
+        return stateVector
     }
     
-    /// Enter a quantum writing state
-    public func enterState(_ name: String) throws -> String {
-        guard let state = contextStates[name] else {
-            throw WriterError.invalidState
+    /// Update file state with quantum awareness
+    public func updateFileState(_ path: String, changes: [TextChange]) throws {
+        guard var state = fileStates[path] else {
+            throw WriterError.fileNotTracked
         }
         
-        superposition.insert(name)
-        return "Entered \(name) state with coherence \(String(format: "%.2f", state.coherence))"
-    }
-    
-    /// Collapse writing states into final form
-    public func collapseStates() throws -> String {
-        var result = ""
-        for state in superposition {
-            if let quantum = contextStates[state] {
-                try metalCompute?.processQuantumState(quantum, gate: .hadamard)
-                result += "\n- Collapsed \(state) with probability \(String(format: "%.2f", quantum.measure()))"
-            }
-        }
-        superposition.removeAll()
-        return result
-    }
-    
-    // MARK: - Quantum Writing Operations
-    
-    /// Process parallel writing streams
-    public func processParallelWriting(_ contexts: [String]) throws -> String {
-        var outputs: [String] = []
+        // Apply quantum transformation
+        let changeVector = try vectorizeChanges(changes)
+        state = try stateManager.applyTransformation(state, changeVector)
         
-        for context in contexts {
-            if let state = contextStates[context] {
-                // Apply quantum transformation
-                try metalCompute?.processQuantumState(state, gate: .hadamard)
-                
-                // Neural processing
-                if neuralEngine.isAvailable {
-                    outputs.append("Neural-enhanced writing in \(context)")
-                } else {
-                    outputs.append("Classical writing in \(context)")
-                }
-            }
+        // Update coherence graph
+        coherenceGraph.updateNode(state)
+        fileStates[path] = state
+    }
+    
+    // MARK: - Neural Completion
+    
+    /// Get context-aware completions
+    public func getCompletions(cursor: CursorPosition) throws -> [Completion] {
+        // Get relevant file states
+        let contextStates = coherenceGraph.getRelevantStates(for: cursor)
+        
+        // Create quantum superposition of states
+        let superposition = try contextStates.map { state in
+            try stateManager.createSuperposition(state)
         }
         
-        return outputs.joined(separator: "\n")
+        // Generate completions using quantum context
+        return try completionContext.generate(
+            cursor: cursor,
+            states: superposition,
+            environment: environmentModel
+        )
     }
     
-    /// Quantum-aware document review
-    public func reviewDocument(_ path: String) throws -> String {
-        let state = try enterState("review")
-        
-        // Simulate quantum document analysis
-        let reviewState = contextStates["review"]!
-        try metalCompute?.processQuantumState(reviewState, gate: .hadamard)
-        
-        return """
-        📚 Quantum Document Review:
-        - Path: \(path)
-        - State: \(state)
-        - Neural coherence: \(String(format: "%.2f", reviewState.coherence))
-        - Analysis complete
-        """
-    }
+    // MARK: - Environment Modeling
     
-    // MARK: - Error Handling
-    public enum WriterError: Error {
-        case invalidState
-        case coherenceLoss
-        case neuralMisalignment
+    /// Update environment model with new observations
+    public func updateEnvironment(_ observation: EnvironmentObservation) throws {
+        // Vectorize observation
+        let observationVector = try vectorizeObservation(observation)
+        
+        // Update quantum environment model
+        environmentModel = try stateManager.evolveEnvironment(
+            environmentModel,
+            observation: observationVector
+        )
+        
+        // Update completion context
+        completionContext.updateWithEnvironment(environmentModel)
     }
 }
 
-// MARK: - QuantumVector Extensions
-extension QuantumVector {
-    /// Get the current coherence value
-    var coherence: Double {
-        let components = self.components
-        if components.isEmpty {
-            return 0.0
-        }
-        return Double(components[0].real * components[0].real + components[1].real * components[1].real)
+// MARK: - Supporting Types
+
+public struct FileStateVector {
+    let path: String
+    var content: String
+    var quantum: QuantumVector
+    var coherence: Double
+    
+    init(path: String, content: String) throws {
+        self.path = path
+        self.content = content
+        self.quantum = try QuantumVector.fromText(content)
+        self.coherence = 1.0
+    }
+}
+
+public class StateCoherenceGraph {
+    private var nodes: [FileStateVector] = []
+    private var edges: [(FileStateVector, FileStateVector, Double)] = []
+    
+    func addNode(_ state: FileStateVector) {
+        nodes.append(state)
+        updateEdges(for: state)
     }
     
-    func measure() -> Double {
-        let probability = coherence
-        return probability
+    func updateNode(_ state: FileStateVector) {
+        if let index = nodes.firstIndex(where: { $0.path == state.path }) {
+            nodes[index] = state
+            updateEdges(for: state)
+        }
+    }
+    
+    private func updateEdges(for state: FileStateVector) {
+        // Calculate quantum entanglement between states
+        for node in nodes where node.path != state.path {
+            let coherence = calculateCoherence(state, node)
+            edges.append((state, node, coherence))
+        }
+    }
+    
+    private func calculateCoherence(_ a: FileStateVector, _ b: FileStateVector) -> Double {
+        // Quantum similarity measure
+        return try? a.quantum.overlap(with: b.quantum) ?? 0.0
+    }
+    
+    func getRelevantStates(for cursor: CursorPosition) -> [FileStateVector] {
+        // Get states with high coherence near cursor
+        return nodes.filter { state in
+            let coherence = edges
+                .filter { $0.0.path == state.path || $0.1.path == state.path }
+                .map(\.2)
+                .reduce(0.0, +)
+            return coherence > 0.7
+        }
+    }
+}
+
+public struct CompletionContext {
+    private var recentCompletions: [(completion: String, acceptance: Bool)] = []
+    private var environmentState: EnvironmentVector?
+    
+    mutating func updateWithEnvironment(_ env: EnvironmentVector) {
+        self.environmentState = env
+    }
+    
+    func generate(cursor: CursorPosition, 
+                 states: [QuantumVector],
+                 environment: EnvironmentVector) throws -> [Completion] {
+        // Generate completions using quantum context
+        let contextVector = try QuantumVector.combine(states)
+        let envVector = environment.currentState
+        
+        // Apply quantum transformation
+        let completionVector = try contextVector.transform(with: envVector)
+        
+        // Convert to completions
+        return try Completion.fromVector(completionVector)
+    }
+}
+
+public struct EnvironmentVector {
+    var currentState: QuantumVector
+    var history: [QuantumVector]
+    
+    init() {
+        self.currentState = QuantumVector.identity
+        self.history = []
     }
 }
