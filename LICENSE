@@ -5,8 +5,16 @@ All rights reserved.
 The Quantum Index project, including all its innovative features, implementations, and optimizations as described in the README.md, is the proprietary and confidential intellectual property of Saad Farooq. This includes, but is not limited to:
 
 1. All source code, configurations, and documentation
-2. The quantum-inspired process analysis system
-3. M3-specific optimizations and Metal acceleration implementations
+2. AmiG (Agentic Metal Integration Gateway):
+   - Metal-accelerated compute pipeline
+   - Quantum state management system
+   - Hardware-optimized M3 implementations
+   - SIMD and tensor operations
+3. Quandex Neural Engine:
+   - Quantum-enhanced RAG system
+   - Metal acceleration layer
+   - GGUF optimization techniques
+   - Dynamic memory management
 4. The Cortex service architecture and its components
 5. All novel implementations including ProcessViewer, QuantumRAG, and MetalAccelerator
 

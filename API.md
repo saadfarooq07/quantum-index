@@ -408,3 +408,175 @@ print(f"Memory usage: {stats['memory_usage']}")
    - Pre-load frequently used models
    - Monitor memory usage
    - Use streaming for long responses
+
+## Metal-Accelerated API Server Documentation
+
+## Overview
+High-performance API server leveraging Apple Metal for hardware-accelerated computation. The server provides text processing, quantum circuit simulation, and cryptographic operations with SIMD optimization.
+
+## Base URL
+```
+http://localhost:8000
+```
+
+## Authentication
+Currently, the API does not require authentication. For production use, implement appropriate authentication mechanisms.
+
+## Endpoints
+
+### 1. Text Completions
+Generate text completions using Metal-accelerated processing.
+
+**Endpoint:** `/v1/completions`  
+**Method:** POST  
+**Content-Type:** application/json
+
+#### Request Body
+```json
+{
+    "model": "metal-m3",
+    "prompt": "Your input text here",
+    "max_tokens": 100,
+    "temperature": 0.7,
+    "stream": false
+}
+```
+
+#### Parameters
+- `model` (string, required): Model identifier (currently supports "metal-m3")
+- `prompt` (string, required): Input text for completion
+- `max_tokens` (integer, optional): Maximum number of tokens to generate (default: 100, max: 512)
+- `temperature` (float, optional): Sampling temperature (default: 0.7, range: 0.0-2.0)
+- `stream` (boolean, optional): Enable streaming responses (default: false)
+
+#### Response
+```json
+{
+    "id": "metal-m3-1640995200",
+    "object": "text_completion",
+    "created": 1640995200,
+    "model": "metal-m3",
+    "choices": [
+        {
+            "text": "Generated completion text",
+            "index": 0,
+            "finish_reason": "stop"
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 10,
+        "completion_tokens": 20,
+        "total_tokens": 30
+    }
+}
+```
+
+### 2. Health Check
+Check the server and Metal device status.
+
+**Endpoint:** `/health`  
+**Method:** GET
+
+#### Response
+```json
+{
+    "status": "healthy",
+    "metal_device": "Apple M3 Pro",
+    "timestamp": 1640995200
+}
+```
+
+### 3. Metrics
+Get server performance metrics and device information.
+
+**Endpoint:** `/metrics`  
+**Method:** GET
+
+#### Response
+```json
+{
+    "metrics": {
+        "total_requests": 100,
+        "successful_requests": 95,
+        "failed_requests": 5,
+        "average_latency": 0.15,
+        "metal_utilization": 0.75
+    },
+    "device": {
+        "name": "Apple M3 Pro",
+        "is_low_power": false,
+        "max_buffer_length": 1073741824
+    },
+    "timestamp": "2024-12-18T19:57:45-08:00"
+}
+```
+
+## Error Handling
+
+### Error Response Format
+```json
+{
+    "detail": "Error message describing what went wrong"
+}
+```
+
+### Common Error Codes
+- `400 Bad Request`: Invalid request parameters
+- `404 Not Found`: Requested resource not found
+- `500 Internal Server Error`: Server-side processing error
+
+## Metal Compute Features
+
+### 1. SIMD-Optimized Operations
+- Matrix multiplication using SIMD groups
+- Multi-head attention with SIMD optimization
+- Token embedding with positional encoding
+
+### 2. Quantum Circuit Simulation
+- Support for quantum gate operations
+- Complex number arithmetic
+- State vector manipulation
+
+### 3. Cryptographic Operations
+- Hardware-accelerated hashing
+- Secure mixing functions
+- Parallel processing of large data sets
+
+### 4. Neural Network Functions
+- Multiple activation functions (ReLU, GELU, Sigmoid, Tanh)
+- Layer normalization
+- Feed-forward network processing
+
+## Performance Monitoring
+
+### Metrics Tracked
+- Request success/failure rates
+- Average request latency
+- Metal device utilization
+- Memory usage
+- Throughput
+
+### Logging
+- Structured JSON logging
+- Request/response logging
+- Error tracking
+- Performance metrics
+
+## Best Practices
+
+1. **Request Size**
+   - Keep prompts under 512 tokens for optimal performance
+   - Use streaming for long-running operations
+
+2. **Rate Limiting**
+   - Implement appropriate rate limiting for production use
+   - Monitor Metal device utilization
+
+3. **Error Handling**
+   - Always check response status codes
+   - Implement proper retry logic with exponential backoff
+
+4. **Performance**
+   - Use batch processing when possible
+   - Monitor metrics endpoint for system health
+   - Implement proper caching strategies
