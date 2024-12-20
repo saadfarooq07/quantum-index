@@ -1,0 +1,18 @@
+[package]
+name = "q0rtex-rs"
+version = "0.1.0"
+edition = "2021"
+authors = ["Quandex Team <team@quandex.io>"]
+description = "Quantum operations with Metal GPU acceleration"
+
+[dependencies]
+metal = { version = "0.27.0", features = ["gpu-allocator"] }
+core-foundation = "0.9.3"
+num-complex = "0.4"
+rayon = "1.8"
+thiserror = "1.0"
+futures = "0.3"
+
+[features]
+default = ["metal-compute"]
+metal-compute = []

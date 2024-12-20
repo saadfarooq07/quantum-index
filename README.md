@@ -5,20 +5,6 @@ All rights reserved.
 
 Hi there! Let me tell you about something really cool that makes your fancy M3 Mac even more amazing. You know how your computer has this special brain called the Neural Engine? Well, we made something that helps it think faster and smarter!
 
-## System Architecture 🔍
-
-Our modern architecture leverages the power of quantum-inspired processing and Apple's M3 Neural Engine:
-
-![Quandex Architecture](diagrams/architecture.png)
-
-This architecture diagram shows how Quandex:
-- Integrates directly with the M3 Neural Engine through Metal
-- Manages quantum states for optimal processing
-- Implements reality-anchored validation
-- Orchestrates memory and resource allocation
-
-[View detailed architecture diagram](diagrams/architecture.png)
-
 ## What Makes It Special? ✨
 
 ### Speed Like Never Before 🏃‍♂️
@@ -26,15 +12,12 @@ This architecture diagram shows how Quandex:
 - **Smart Memory**: Never wastes your computer's brain power
 - **Just Works**: No complicated setup needed
 
-### Why You'll Love It \U0001F49D
-# Build qTerm
-cargo build --release
+### Why You'll Love It 💝
+- Makes LLaMA 3.2 and other AI models run FAST on your Mac
+- Uses way less power than other solutions
+- Perfect for developers who want to build cool AI stuff
 
-# Run with quantum features
-./target/release/qterm --quantum
-
-# Enable Metal acceleration
-./target/release/qterm --metal
+### Perfect For... 🎯
 - 🎮 Game developers using AI
 - 💻 App makers who want smart features
 - 🔬 Researchers who need quick results
@@ -58,29 +41,27 @@ Most AI stuff needs big, expensive computers. But Quandex? It's built specially 
 - Uses your Mac's Neural Engine through Metal shaders
 - Knows exactly how much unified memory to use
 - Keeps your laptop cool and battery happy
-```rust
-// Initialize quantum processor
-let processor = Q0rtexProcessor::new();
 
-// Process quantum command
-let result = processor.process(
-    command: "quantum-op",
-    state: &current_state
-).await?;
+## Quick Setup 🚀
+
+```bash
+# Install Quandex
+pip install quandex
+
+# Set up Metal optimization
+export METAL_DEVICE_WRAPPER_TYPE=1
+export PYTORCH_ENABLE_MPS_FALLBACK=1
 ```
-```
 
-```rust
-// Configure Metal device
-let device = metal::Device::system_default().expect("No Metal device found");
-let queue = device.new_command_queue();
+## Features That'll Make You Smile 😊
 
-// Create compute pipeline
-let pipeline = device
-    .new_compute_pipeline_state_with_function(
-        "process_quantum_state"
-    )
-    .expect("Failed to create pipeline");
+### 1. Smart Model Loading 🧠
+```python
+# Load models efficiently
+engine = QuandexEngine(
+    model="llama-3.2",
+    metal_optimize=True  # Uses M3's Neural Engine
+)
 ```
 
 ### 2. Memory That Just Works 💫
@@ -93,23 +74,22 @@ result = await engine.process(
 ```
 
 ### 3. Built for Speed 🏎️
-### Requirements
-- Rust 1.75+ (2024 edition)
-- Metal-capable device
-- macOS Sonoma+
-- Cargo package manager
+```python
+# Get those stats!
+stats = engine.get_metal_stats()
+print(f"Processing Speed: {stats['processing_time']}ms")
 ```
-### Building
-```bash
-# Update dependencies
-cargo update
 
-# Build project
-cargo build --release
+## Quandex Neural Engine
 
-# Run tests
-cargo test
-```
+A quantum-inspired neural processor leveraging M3 architecture for token-level state management and reality-anchored inference.
+
+## Overview
+
+Quandex is a quantum-inspired neural processing engine optimized for Apple Silicon M3, featuring Metal acceleration and quantum state management.
+
+```mermaid
+graph TB
     User[User] --> QTerm[qTerm]
     QTerm --> Q0rtex[Q0rtex Engine]
     Q0rtex --> JAN[JAN API]
@@ -132,23 +112,10 @@ cargo test
 - Dynamic memory management
 
 ### AI Integration
-- Full OpenAI API compatibility
-- Chat completions (/v1/chat/completions)
-- Embeddings (/v1/embeddings)
-- Models (/v1/models)
-- Quantum-enhanced RAG
-- Reality-anchored document retrieval
-- Context-aware embeddings
-- Automatic source verification
+- OpenAI-compatible API endpoints
+- Quantum-enhanced embeddings
 - Metal-accelerated inference
-- Dynamic batching
-- Unified memory optimization
-- Neural Engine utilization
-- Advanced state management
 - Parallel state processing
-- Quantum meditation support
-- UX development tracking
-- Project maturity metrics
 
 ## Quick Start
 
@@ -230,13 +197,11 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ## Features
 
-### \U0001F680 Metal Acceleration
+### 🚀 Metal Acceleration
 - Direct M3 Neural Engine integration
-- Advanced Metal Performance Shaders (MPS)
-- 8-bit quantization with dynamic precision
-- Smart batch processing with memory optimization
-- Metal-accelerated quantum operations
-- Real-time performance monitoring
+- Metal Performance Shaders (MPS)
+- 8-bit quantization
+- Dynamic batch processing
 
 ### 🧠 Quantum-Inspired Processing
 - Token-level state management
@@ -347,14 +312,10 @@ output = model.generate(
 
 ## Performance
 
-- **API Response Time**: <10ms
 - **Latency**: <50ms per token
 - **Throughput**: >1000 tokens/sec
 - **Memory**: 8-16GB (dynamic)
 - **Reality Score**: >0.95
-- **Test Coverage**: >90%
-- **Documentation Coverage**: >85%
-- **API Compatibility**: 99.9% with OpenAI endpoints
 
 ## System Requirements 🖥️
 
