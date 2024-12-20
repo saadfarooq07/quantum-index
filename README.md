@@ -27,14 +27,14 @@ This architecture diagram shows how Quandex:
 - **Just Works**: No complicated setup needed
 
 ### Why You'll Love It \U0001F49D
-- **OpenAI Compatible**: Drop-in replacement for OpenAI endpoints
-- **Quantum RAG**: Reality-anchored document retrieval with Metal acceleration
-- **Fast & Efficient**: Makes LLaMA and other models run FAST on your Mac
-- **Power-Efficient**: Uses way less power than other solutions
-- **Developer-Friendly**: Perfect for developers building AI applications
-- **Mature & Tested**: Comprehensive test suite and documentation
+# Build qTerm
+cargo build --release
 
-### Perfect For... 🎯
+# Run with quantum features
+./target/release/qterm --quantum
+
+# Enable Metal acceleration
+./target/release/qterm --metal
 - 🎮 Game developers using AI
 - 💻 App makers who want smart features
 - 🔬 Researchers who need quick results
@@ -58,27 +58,29 @@ Most AI stuff needs big, expensive computers. But Quandex? It's built specially 
 - Uses your Mac's Neural Engine through Metal shaders
 - Knows exactly how much unified memory to use
 - Keeps your laptop cool and battery happy
+```rust
+// Initialize quantum processor
+let processor = Q0rtexProcessor::new();
 
-## Quick Setup 🚀
-
-```bash
-# Install Quandex
-pip install quandex
-
-# Set up Metal optimization
-export METAL_DEVICE_WRAPPER_TYPE=1
-export PYTORCH_ENABLE_MPS_FALLBACK=1
+// Process quantum command
+let result = processor.process(
+    command: "quantum-op",
+    state: &current_state
+).await?;
+```
 ```
 
-## Features That'll Make You Smile 😊
+```rust
+// Configure Metal device
+let device = metal::Device::system_default().expect("No Metal device found");
+let queue = device.new_command_queue();
 
-### 1. Smart Model Loading 🧠
-```python
-# Load models efficiently
-engine = QuandexEngine(
-    model="llama-3.2",
-    metal_optimize=True  # Uses M3's Neural Engine
-)
+// Create compute pipeline
+let pipeline = device
+    .new_compute_pipeline_state_with_function(
+        "process_quantum_state"
+    )
+    .expect("Failed to create pipeline");
 ```
 
 ### 2. Memory That Just Works 💫
@@ -91,22 +93,23 @@ result = await engine.process(
 ```
 
 ### 3. Built for Speed 🏎️
-```python
-# Get those stats!
-stats = engine.get_metal_stats()
-print(f"Processing Speed: {stats['processing_time']}ms")
+### Requirements
+- Rust 1.75+ (2024 edition)
+- Metal-capable device
+- macOS Sonoma+
+- Cargo package manager
 ```
+### Building
+```bash
+# Update dependencies
+cargo update
 
-## Quandex Neural Engine
+# Build project
+cargo build --release
 
-A quantum-inspired neural processor leveraging M3 architecture for token-level state management and reality-anchored inference.
-
-## Overview
-
-Quandex is a quantum-inspired neural processing engine optimized for Apple Silicon M3, featuring Metal acceleration and quantum state management.
-
-```mermaid
-graph TB
+# Run tests
+cargo test
+```
     User[User] --> QTerm[qTerm]
     QTerm --> Q0rtex[Q0rtex Engine]
     Q0rtex --> JAN[JAN API]
