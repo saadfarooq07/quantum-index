@@ -1,11 +1,19 @@
 use std::ffi::{c_void, CString};
 use tokio::runtime::Runtime;
 
+mod ui;
 mod quantum;
+mod compute;
+mod effects;
+mod optimizations;
 mod gpu;
 
 pub use quantum::*;
+pub use compute::metal::MetalCompute;
+pub use effects::quantum::QuantumEffect;
+pub use optimizations::ResourceOptimizer;
 pub use gpu::*;
+pub use ui::QuantumUI;
 #[repr(C)]
 pub struct QuantumState {
     amplitudes: *mut f32,

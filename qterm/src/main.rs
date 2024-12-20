@@ -21,20 +21,31 @@ fn main() {
     let runtime = tokio::runtime::Runtime::new()
         .expect("Failed to create Tokio runtime");
     
-    let ctx = MetalContext::new()
-        .expect("Failed to initialize Metal context");
+    let ctx = Arc::new(MetalContext::new()
+        .expect("Failed to initialize Metal context"));
         
-    // Initialize quantum state
-    let quantum_state = unsafe {
-        quantum_bridge::quantum_create_state(16)
-    };
+    // Initialize states
+    let binary_state = BinaryState::new();
+    let living_state = LivingState::new(ctx.clone());
     
-    // Example quantum circuit
-    unsafe {
-        quantum_bridge::quantum_apply_gate(quantum_state, 0, 0); // Apply H gate
-        let measurement = quantum_bridge::quantum_measure_state(quantum_state);
-        println!("Measurement result: {}", measurement);
-        quantum_bridge::quantum_destroy_state(quantum_state);
-    }
+    // Initialize state bridge for communication
+    let state_bridge = StateBridge::new(binary_state.clone(), living_state.clone());
+    
+    // Start visualization engine
+    let vis_engine = visualization::Engine::new(ctx.clone());
+    let vis_handle = tokio::spawn(async move {
+        vis_engine.run().await;
+    });
+    
+    // Run the binary state terminal interface
+    let term_handle = tokio::spawn(async move {
+        binary_state.run().await;
+    });
+    
+    // Wait for completion
+    runtime.block_on(async {
+        tokio::try_join!(vis_handle, term_handle)
+            .expect("Failed to run state handlers");
+    });
 }
 
